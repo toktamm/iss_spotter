@@ -37,24 +37,26 @@ const fetchMyIP = function(callback) {
 
 const fetchCoordsByIP = function(ip, callback) {
 
-  request('https://ipvigilante.com/' + ip, (error, response, body) => {
+  request(`https://ipvigilante.com/json/${ip}`, (error, response, body) => {
 
-
+    // inside the request callback ...
+    // error can be set if invalid domain, user is offline, etc.
     if (error) {
       callback(error, null);
       return;
     }
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
-      const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
+      const msg = `Status Code ${response.statusCode} when fetching coordinates for IP. Response: ${body}`;
       callback(Error(msg), null);
       return;
     }
+    // if we get here, all's well and we got the data
 
+    // console.log(JSON.parse(body));    //so we could see what body was. lat & long were inside the data so we added .data
     const latitude = JSON.parse(body).data.latitude;
     const longitude = JSON.parse(body).data.longitude;
     const coordinates = { latitude, longitude };
-    // console.log(JSON.parse(body));
     callback(null, coordinates);
 
   })
