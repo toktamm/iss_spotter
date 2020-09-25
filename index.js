@@ -19,6 +19,6 @@ fetchCoordsByIP('76.68.115.71', (error, coordinates) => {
       return;
     }
   
-    console.log('It worked! Returned IP:' , coordinates);
+    console.log('It worked! Returned coordinates:' , coordinates);
   });
 
