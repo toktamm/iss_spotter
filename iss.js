@@ -47,20 +47,16 @@ const fetchCoordsByIP = function(ip, callback) {
     }
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
-      const msg = `Status Code ${response.statusCode} when fetching coordinates for IP. Response: ${body}`;
-      callback(Error(msg), null);
+      callback(Error(`Status Code ${response.statusCode} when fetching coordinates for IP. Response: ${body}`), null);
       return;
     }
     // if we get here, all's well and we got the data
 
-    // console.log(JSON.parse(body));    //so we could see what body was. lat & long were inside the data so we added .data
-    const latitude = JSON.parse(body).data.latitude;
-    const longitude = JSON.parse(body).data.longitude;
-    const coordinates = { latitude, longitude };
-    callback(null, coordinates);
+    const { latitude, longitude } = JSON.parse(body).data;
 
-  })
-}
+    callback(null, { latitude, longitude });
+  });
+};
 
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+module.exports = { fetchCoordsByIP };
