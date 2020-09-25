@@ -108,4 +108,4 @@ const fetchISSFlyOverTimes = function(coords, callback) {
 
 
 
-module.exports = { ffetchISSFlyOverTimes };
+module.exports = { fetchISSFlyOverTimes };
